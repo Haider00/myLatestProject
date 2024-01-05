@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "json-server": "json-server --watch src/pages/api/notesDB.json --port 3001"
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",
@@ -16,6 +17,7 @@
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
+    "react-query": "^3.39.3",
     "react-redux": "^9.0.4"
   }
 }

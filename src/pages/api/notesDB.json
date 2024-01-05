@@ -1,0 +1,37 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "firstName": "John",
+      "lastName": "doe",
+      "email": "john@example.com",
+      "password": "john123"
+    },
+    {
+      "firstName": "bob",
+      "lastName": "alice",
+      "email": "bob123@gmai.com",
+      "password": "bob12345",
+      "id": 2
+    },
+    {
+      "firstName": "yourname",
+      "lastName": "lastname",
+      "email": "john@gmail.com",
+      "password": "123456",
+      "id": 3
+    }
+  ],
+  "notes": [
+    {
+      "heading": "hihd",
+      "description": "md",
+      "id": 7
+    },
+    {
+      "heading": "hi",
+      "description": "hoooooooooo",
+      "id": 8
+    }
+  ]
+}

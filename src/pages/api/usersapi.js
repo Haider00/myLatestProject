@@ -1,40 +1,45 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-export const userApi = createApi({
-  reducerPath: 'userApi',
-  baseQuery: fetchBaseQuery({ baseUrl: '/api' }), 
+export const users = createApi({
+  reducerPath: 'usersApi',
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3001' }),
   endpoints: (builder) => ({
-    addnotes: builder.mutation({
-      query: (newItems) => ({
-        url: '/notes',
+    getUsers: builder.query({
+      query: () => 'users',
+    }),
+    getUserId: builder.query({
+      query: (id) => `users/${id}`,
+    }),
+    getUserByEmail: builder.query({
+      query: (email) => `users/${email}`,
+    }),
+    createUser: builder.mutation({
+      query: (newUser) => ({
+        url: 'users',
         method: 'POST',
-        body: newItems,
+        body: newUser,
       }),
     }),
-    getNotes: builder.query({
-      query: (id) => ({
-        url: `notes/${id}`,
-        method:"GET"
+    updateUser: builder.mutation({
+      query: ({ id, ...updates }) => ({
+        url: `users/${id}`,
+        method: 'PUT',
+        body: updates,
       }),
     }),
-    updateNotes: builder.mutation({
+    deleteUser: builder.mutation({
       query: (id) => ({
-        url: `notes/${id}`,
-        method:"PATCH"
-      }),
-    }),
-    deleteNotes: builder.mutation({
-      query: (id) => ({
-        url: `notes/${id}`,
-        method:"DELETE"
+        url: `users/${id}`,
+        method: 'DELETE',
       }),
     }),
   }),
-});
+})
 
-export const {
-  useAddnotesMutation,
-  useGetNotesQuery,
-  useUpdateNotesMutation,
-  useDeleteNotesMutation
-} = userApi;
+
+/**
+ * 
+ */
+
+
+export const {useCreateUserMutation,useGetUserByEmailQuery,useGetUsersQuery,useDeleteUserMutation,useGetUserIdQuery} = users;

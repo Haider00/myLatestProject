@@ -7,8 +7,11 @@ import {
   Button,
   Link,
 } from "@mui/material";
+import { useRouter } from "next/router";
+import { useCreateUserMutation } from "./api/usersapi"; 
 
 const Signup = () => {
+  const router = useRouter();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -17,13 +20,13 @@ const Signup = () => {
   const [lastNameError, setLastNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-
+  const [createUser]= useCreateUserMutation();
   const validateEmail = (inputEmail) => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailPattern.test(inputEmail);
   };
 
-  const handleSignup = () => {
+  const handleSignup = async() => {
     if (firstName.trim() === "") {
       setFirstNameError(true);
       return;
@@ -51,6 +54,8 @@ const Signup = () => {
       password: password,
     };
 
+    await createUser(newObj);
+    
     console.log("newObj>>", newObj)
     setFirstName("");
     setLastName("");
@@ -60,8 +65,9 @@ const Signup = () => {
     setLastNameError(false);
     setEmailError(false);
     setPasswordError(false);
-
+    
     console.log("Signup successful!");
+    router.push("/notes");
   };
 
   return (

@@ -8,20 +8,23 @@ import {
   Link,
 } from "@mui/material";
 import { useRouter } from "next/router";
-
+import {useGetUsersQuery} from "./api/usersapi";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-
+  
   const router = useRouter();
+// getting users-data from Api using RTK
+  const {isLoading,isError, isSuccess, data,error}= useGetUsersQuery();
   const validateEmail = (inputEmail) => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailPattern.test(inputEmail);
   };
 
   const handleLogin = () => {
+    
     if (email.trim() === "" || !validateEmail(email)) {
       setEmailError(true);
       return;
@@ -31,19 +34,38 @@ const LoginPage = () => {
       setPasswordError(true);
       return;
     }
-
-    const newObj = {
-      email: email,
-      password: password,
-    };
-    setEmail("");
-    setPassword("");
-    setEmailError(false);
-    setPasswordError(false);
-
+   
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
+    
+    if (isError) {
+      return <div>Error: {error.message}</div>;
+    }
+    
+    if (isSuccess) {
+      const userWithEmail = data.find((user) => user.email === email);
+      if (!userWithEmail) {
+        return <div>User with this email not found</div>;
+      }
+      else{
+        const userExists = data.find((user) => user.password === password);
+         if(userExists){ 
+          setEmail(""); 
+          setPassword("");
+          setEmailError(false);
+          setPasswordError(false);
+          router.push("/notes");
+         }
+         else{
+          return <div>please enter correct password</div>;
+         }
+      }
+     
+    }
 
     // if login successful
-    router.push("/notes");
+    
 
   };
 
