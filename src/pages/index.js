@@ -77,13 +77,12 @@ const LoginPage = () => {
     if (isSuccess) {
       const userWithEmail = data.find((user) => user.email === email);
       if (!userWithEmail) {
-        return <div>User with this email not found</div>;
+        return toast.error("User with this email dose not exist")
       }
       else{
         const userExists = data.find((user) => user.password === password);
          if(userExists){ 
            dispatch(setUserEmail(email));
-
           setEmail(""); 
           setPassword("");
           setEmailError(false);
@@ -92,7 +91,15 @@ const LoginPage = () => {
           success();
          }
          else{
-          failed();
+          toast.error("User with this email dosen't exist. 😞", {
+            position: "top-right",
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
           return <div>please enter correct password</div>;
          }
       }
@@ -105,16 +112,16 @@ const LoginPage = () => {
       container
       justifyContent="center"
       alignItems="center"
-      sx={{ height: "100vh" }}
+      sx={{ height: "97vh", background: 'linear-gradient(to right, #00d2ff, #928dab)', }}
     >
       <ToastContainer/>
       <Paper
         elevation={5}
-        style={{ padding: "20px", width: 500, textAlign: "center" }}
+        sx={{ padding: "20px", width: 500, textAlign: "center", border:"2px solid blue" }}
       >
-        <Typography variant="h5">Welcome to My Application</Typography>
+        <Typography variant="h4">Welcome to My Application</Typography>
         <Typography variant="h6" sx={{ mt: 2 }}>
-          Login
+          Enter your credentials to Login
         </Typography>
         <TextField
           required
@@ -148,10 +155,12 @@ const LoginPage = () => {
           }
         />
         <Button
-          variant="contained"
+          variant="outlined"
           color="primary"
           onClick={handleLogin}
-          style={{ marginTop: "20px" }}
+          sx={{ marginTop: "20px", '&:hover': {
+            backgroundColor: 'rgba(33, 150, 243, 0.04)',
+          }, }}
         >
           Login
         </Button>

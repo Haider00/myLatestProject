@@ -81,7 +81,7 @@ const Signup = () => {
       container
       justifyContent="center"
       alignItems="center"
-      sx={{ height: "97vh" }}
+      sx={{ height: "97vh", background: 'linear-gradient(to right, #00d2ff, #928dab)'}}
     >
       <Paper
         elevation={5}
@@ -154,7 +154,7 @@ const Signup = () => {
           variant="contained"
           color="primary"
           onClick={handleSignup}
-          style={{ marginTop: "20px" }}
+          style={{ marginTop: "20px", borderRadius:"10px" }}
         >
           Signup
         </Button>

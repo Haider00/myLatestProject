@@ -19,12 +19,14 @@ import {
   useUpdateNoteMutation,
 } from "./api/notesApi";
 import { selectUserEmail } from "./api/userSlice";
+import { useRouter } from "next/router";
 const Notes = () => {
   const [createNote] = useCreateNoteMutation();
   const [updateNote] = useUpdateNoteMutation();
   const [deleteNote] = useDeleteNoteMutation();
   const [heading, setHeading] = useState("");
   const [description, setDescription] = useState("");
+  const router = useRouter();
   const userEmail = useSelector(selectUserEmail);
   const { isLoading, isError, isSuccess, data, error } = useGetNotesQuery();
 
@@ -55,6 +57,9 @@ const Notes = () => {
     setDescription("");
     setHeading("");
   };
+  const handleLogout = ()=>{
+    router.push("/")
+  }
 
   const handleUpdateNote = async (id) => {
     const updatedHeading = prompt("Enter updated heading:");
@@ -75,7 +80,7 @@ const Notes = () => {
   };
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} sx={{background: 'linear-gradient(to right, #00d2ff, #928dab)'}}>
       {/* Left side - Add Note */}
       <Grid item xs={12} md={6}>
         <Paper
@@ -110,8 +115,8 @@ const Notes = () => {
             onChange={(e) => setDescription(e.target.value)}
           />
           <Button
-            sx={{ width: "50%", marginBottom: 2, marginTop:2 }}
-            variant="contained"
+            sx={{ width: "50%", marginBottom: 2, marginTop:2, fontWeight:"bold", borderRadius:"10px" }}
+            variant="outlined"
             color="primary"
             onClick={handleCreateNote}
           >
@@ -145,6 +150,17 @@ const Notes = () => {
             on the right side of the screen. You can update or delete notes
             using the corresponding buttons on each note card.
           </Typography>
+          <Button
+            sx={{ width: "50%", marginBottom: 2, marginTop:2, fontWeight:"bold", borderRadius:"10px"
+            ,'&:hover': {
+              backgroundColor: 'red',
+              color:"white"
+            }, }}
+            variant="outlined"
+            color="primary"
+            onClick={handleLogout}
+          >Logout</Button>
+
         </Paper>
       </Grid>
 
@@ -159,12 +175,15 @@ const Notes = () => {
       userNotes?.map((note) => (
         <Card key={note.id} sx={{ width: "40%", margin: "10px" }}>
           <CardContent>
-            <Typography variant="h6">{note.heading}</Typography>
-            <Typography>{note.description}</Typography>
+          <Typography variant="h6" sx={{fontWeight:"bold"}}>Title</Typography>
+            <Typography variant="button">{note.heading}</Typography>
+            <Typography variant="h6" sx={{fontWeight:"bold"}}>Description</Typography>
+            <Typography variant="button">{note.description}</Typography>
           </CardContent>
           <CardActions>
             <Button
-              variant="contained"
+            sx={{fontWeight:"bold", borderRadius:"5px"}}
+              variant="outlined"
               size="small"
               color="primary"
               onClick={() => handleUpdateNote(note.id)}
@@ -172,7 +191,8 @@ const Notes = () => {
               Update
             </Button>
             <Button
-              variant="contained"
+            sx={{fontWeight:"bold", borderRadius:"5px"}}
+              variant="outlined"
               size="small"
               color="primary"
               onClick={() => handleDeleteNote(note.id)}
