@@ -9,9 +9,13 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/router";
 import { useCreateUserMutation } from "./api/usersapi"; 
+import { useDispatch } from "react-redux";
+import { setUserEmail } from "./api/userSlice";
 
 const Signup = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -54,9 +58,12 @@ const Signup = () => {
       password: password,
     };
 
-    await createUser(newObj);
-    
-    console.log("newObj>>", newObj)
+    const res = await createUser(newObj);
+    dispatch(setUserEmail(email));
+    if(res.data){
+      //Here will call react toastify for success
+    }
+
     setFirstName("");
     setLastName("");
     setEmail("");
@@ -66,8 +73,7 @@ const Signup = () => {
     setEmailError(false);
     setPasswordError(false);
     
-    console.log("Signup successful!");
-    router.push("/notes");
+    router.push("/");
   };
 
   return (

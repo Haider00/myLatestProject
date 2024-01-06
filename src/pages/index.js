@@ -11,6 +11,10 @@ import { useRouter } from "next/router";
 import {useGetUsersQuery} from "./api/usersapi";
 import { useDispatch } from 'react-redux';
 import { setUserEmail } from "./api/userSlice";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const LoginPage = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
@@ -19,6 +23,29 @@ const LoginPage = () => {
   const [passwordError, setPasswordError] = useState(false);
   
   const router = useRouter();
+
+  const success = () =>
+    toast.success("Woohoo! Login successful! 🎉", {
+      position: "top-right",
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  
+    const failed = () => toast.error("Login failed. Please try again. 😞", {
+    position: "top-right",
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "dark",
+  });
+
+
 // getting users-data from Api using RTK
   const {isLoading,isError, isSuccess, data,error}= useGetUsersQuery();
   const validateEmail = (inputEmail) => {
@@ -30,6 +57,7 @@ const LoginPage = () => {
     
     if (email.trim() === "" || !validateEmail(email)) {
       setEmailError(true);
+      failed();
       return;
     }
 
@@ -61,17 +89,15 @@ const LoginPage = () => {
           setEmailError(false);
           setPasswordError(false);
           router.push("/notes");
+          success();
          }
          else{
+          failed();
           return <div>please enter correct password</div>;
          }
       }
      
     }
-
-    // if login successful
-    
-
   };
 
   return (
@@ -81,6 +107,7 @@ const LoginPage = () => {
       alignItems="center"
       sx={{ height: "100vh" }}
     >
+      <ToastContainer/>
       <Paper
         elevation={5}
         style={{ padding: "20px", width: 500, textAlign: "center" }}

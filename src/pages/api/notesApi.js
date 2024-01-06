@@ -30,7 +30,7 @@ export const notes = createApi({
       }), 
       deleteNote: builder.mutation({
         query: (id) => ({
-          url: `notes/${id}`, // Assuming email is required for the delete operation
+          url: `notes/${id}`,
           method: 'DELETE',
         }),
         invalidatesTags:["Notes"]
