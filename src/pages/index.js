@@ -9,7 +9,10 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/router";
 import {useGetUsersQuery} from "./api/usersapi";
+import { useDispatch } from 'react-redux';
+import { setUserEmail } from "./api/userSlice";
 const LoginPage = () => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
@@ -51,6 +54,8 @@ const LoginPage = () => {
       else{
         const userExists = data.find((user) => user.password === password);
          if(userExists){ 
+           dispatch(setUserEmail(email));
+
           setEmail(""); 
           setPassword("");
           setEmailError(false);

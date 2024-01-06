@@ -7,7 +7,7 @@ export const notes = createApi({
     endpoints: (builder) => ({
       getNotes: builder.query({
         query: () => 'notes',
-        providesTags:["Notes"]
+        providesTags:["Notes"] 
       }),
       getNoteById: builder.query({
         query: (id) => `notes/${id}`,
@@ -26,14 +26,15 @@ export const notes = createApi({
           method: 'PUT',
           body: updates,
         }),
-      }),
+        invalidatesTags:["Notes"]
+      }), 
       deleteNote: builder.mutation({
         query: (id) => ({
-          url: `notes/${id}`,
+          url: `notes/${id}`, // Assuming email is required for the delete operation
           method: 'DELETE',
         }),
         invalidatesTags:["Notes"]
-      }),
+      }), 
     }),
   });
 

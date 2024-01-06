@@ -9,9 +9,9 @@ import {
   CardContent,
   CardActions,
 } from '@mui/material';
-
+import { useSelector } from 'react-redux';
 import { useCreateNoteMutation, useDeleteNoteMutation, useGetNoteByIdQuery, useGetNotesQuery, useUpdateNoteMutation } from './api/notesApi';
-
+import { selectUserEmail } from './api/userSlice';
 const Notes = () => {
    
   const [createNote] = useCreateNoteMutation();
@@ -19,19 +19,38 @@ const Notes = () => {
   const [deleteNote] = useDeleteNoteMutation();
   const [heading, setHeading] = useState('');
   const [description, setDescription] = useState('');
-
-  const {isLoading,isError, isSuccess, data,error} = useGetNotesQuery("");
- 
+  const userEmail= useSelector(selectUserEmail);
+  const {isLoading,isError, isSuccess, data,error} = useGetNotesQuery();
+  
+    let userNotes = [];
+    if (isSuccess) {
+      // Find the user object associated with the user's email
+      const allNotes = data.filter((item) => item.email === userEmail);
+    
+      // If user object is found, extract the notes array
+      if (allNotes) {
+        userNotes =allNotes;
+        console.log("User Notes:", userNotes);
+      }
+    }
+//to generate a unique id everytime
+    function generateUniqueId() {
+      return Date.now().toString(36) + Math.random().toString(36).substring(2);
+    } 
+    
 
  const handleCreateNote = async () => {
   if (heading.trim() === '' || description.trim() === '') {
         return; 
       } 
-   const newNote = { heading, description };
+      const uniqueId = generateUniqueId();
+   const newNote = {id:uniqueId,email:userEmail, heading, description };
+
    await createNote(newNote); 
    setDescription('');
    setHeading('');
   
+ 
  };  
 
  const handleUpdateNote = async (id) => {
@@ -39,7 +58,7 @@ const Notes = () => {
     const updatedDescription = prompt('Enter updated description:');
      
     if (updatedHeading !== null && updatedDescription !== null) {
-    const updatedNote = { heading: updatedHeading, desc: updatedDescription };
+    const updatedNote = { email:userEmail,heading: updatedHeading, description: updatedDescription };
    await updateNote({ id, ...updatedNote });
      } 
    
@@ -83,7 +102,7 @@ const Notes = () => {
       <Grid item xs={12}>
         <Typography variant="h5">Notes List</Typography>
         <div>
-          { isSuccess? data?.map((note) => (
+          { isSuccess? userNotes?.map((note) => (
             <Card key={note.id} style={{ margin: '10px' }}>
               <CardContent>
                 <Typography variant="h6">{note.heading}</Typography>
@@ -97,6 +116,7 @@ const Notes = () => {
                   onClick={() => handleUpdateNote(note.id)}
                 >
                   Update
+                  
                 </Button>
                 <Button
                   variant="contained"
