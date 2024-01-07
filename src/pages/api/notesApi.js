@@ -1,9 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-//this is my API file
+
 export const notes = createApi({
     reducerPath: 'notesApi',
     baseQuery: fetchBaseQuery({ baseUrl: 'https://apijson-ezj8.onrender.com/' }),
     tagTypes: ['Notes'],
+
+    //End-point to Get notes
     endpoints: (builder) => ({
       getNotes: builder.query({
         query: () => 'notes',
@@ -12,6 +14,8 @@ export const notes = createApi({
       getNoteById: builder.query({
         query: (id) => `notes/${id}`,
       }),
+
+      //End-point to add notes
       createNote: builder.mutation({ 
         query: (newNote) => ({
           url: 'notes',
@@ -20,6 +24,8 @@ export const notes = createApi({
         }),
         invalidatesTags:["Notes"],
       }),
+
+      //End-point to Update notes
       updateNote: builder.mutation({
         query: ({ id, ...updates }) => ({
           url: `notes/${id}`,
@@ -28,6 +34,8 @@ export const notes = createApi({
         }),
         invalidatesTags:["Notes"]
       }), 
+      
+      //End-point to Delete notes
       deleteNote: builder.mutation({
         query: (id) => ({
           url: `notes/${id}`,

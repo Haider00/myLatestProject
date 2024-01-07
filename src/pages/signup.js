@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { useCreateUserMutation } from "./api/usersapi"; 
 import { useDispatch } from "react-redux";
 import { setUserEmail } from "./api/userSlice";
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
 
 const Signup = () => {
   const router = useRouter();
@@ -59,7 +60,6 @@ const Signup = () => {
     };
 
     const res = await createUser(newObj);
-    console.log("res",res)
     dispatch(setUserEmail(email));
     
     setFirstName("");
@@ -149,7 +149,8 @@ const Signup = () => {
           }
         />
         <Button
-          variant="contained"
+        startIcon={<VpnKeyIcon/>}
+          variant="outlined"
           color="primary"
           onClick={handleSignup}
           style={{ marginTop: "20px", borderRadius:"10px" }}

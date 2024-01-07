@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import {useGetUsersQuery} from "./api/usersapi";
 import { useDispatch } from 'react-redux';
 import { setUserEmail } from "./api/userSlice";
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -155,6 +156,7 @@ const LoginPage = () => {
           }
         />
         <Button
+          startIcon={<VpnKeyIcon/>}
           variant="outlined"
           color="primary"
           onClick={handleLogin}
