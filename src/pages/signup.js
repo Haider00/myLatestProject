@@ -59,11 +59,9 @@ const Signup = () => {
     };
 
     const res = await createUser(newObj);
+    console.log("res",res)
     dispatch(setUserEmail(email));
-    if(res.data){
-      //Here will call react toastify for success
-    }
-
+    
     setFirstName("");
     setLastName("");
     setEmail("");

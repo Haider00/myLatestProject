@@ -34,6 +34,34 @@
       "email": "test@gmail.com",
       "password": "qwerty786",
       "id": 5
+    },
+    {
+      "firstName": "asasa",
+      "lastName": "asas",
+      "email": "data@gmail.com",
+      "password": "11223344",
+      "id": 6
+    },
+    {
+      "firstName": "asdas",
+      "lastName": "asdasd",
+      "email": "data1@gmail.com",
+      "password": "11223344",
+      "id": 7
+    },
+    {
+      "firstName": "asdasd",
+      "lastName": "asdsd",
+      "email": "testing@gmail.com",
+      "password": "123456",
+      "id": 8
+    },
+    {
+      "firstName": "asdasd",
+      "lastName": "asdasd",
+      "email": "hamza@gmail.com",
+      "password": "11223344",
+      "id": 9
     }
   ],
   "notes": [
@@ -120,6 +148,18 @@
       "email": "test@gmail.com",
       "heading": "adsdas",
       "description": "asdasdasd"
+    },
+    {
+      "id": "lr36g2vkr051z0s5afd",
+      "email": "data@gmail.com",
+      "heading": "Hellow updated",
+      "description": "assasassa"
+    },
+    {
+      "email": "data1@gmail.com",
+      "heading": "eweeqe",
+      "description": "qweqweqw",
+      "id": "lr373zgfttdid9dmi4l"
     }
   ]
 }

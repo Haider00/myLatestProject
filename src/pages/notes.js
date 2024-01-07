@@ -80,7 +80,7 @@ const Notes = () => {
   };
 
   return (
-    <Grid container spacing={2} sx={{background: 'linear-gradient(to right, #00d2ff, #928dab)'}}>
+    <Grid container spacing={2} sx={{height:"100vh" ,background: 'linear-gradient(to right, #00d2ff, #928dab)'}}>
       {/* Left side - Add Note */}
       <Grid item xs={12} md={6}>
         <Paper
