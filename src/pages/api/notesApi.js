@@ -12,7 +12,7 @@ export const notes = createApi({
       getNoteById: builder.query({
         query: (id) => `notes/${id}`,
       }),
-      createNote: builder.mutation({
+      createNote: builder.mutation({ 
         query: (newNote) => ({
           url: 'notes',
           method: 'POST',
